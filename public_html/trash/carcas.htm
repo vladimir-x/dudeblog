@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Saeva.Одежда и Аксессуары.</title>
+		<meta name="description" content="Saeva. Авторская одежда и аксессуары в Пскове. Бохо. Шебби. Этно. Мори.">
+		<meta name="robots" content="all">
+		
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/local.css" rel="stylesheet" media="screen">
+      
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        
+        <script src="js/navigateScrips.js"></script>
+        
+        <script type="text/javascript">
+            
+            function loadPage(page){
+            
+                var headPrt = '';
+                switch (page){
+                    case 'main': headPrt = 'main_head'; break;
+                    default:     headPrt = 'all_head';break;
+                    
+                }
+                
+                //шапка
+                $.ajax({
+                            url:'generator.php?page='+headPrt,
+                            dataType: 'html',
+                            success: function (result) {
+                                $("#headPlace").html(result);
+                            return result;
+                        }
+                });
+                
+                //контент
+                $.ajax({
+                            url:'generator.php?page='+page,
+                            dataType: 'html',
+                            success: function (result) {
+                                $("#containPlace").html(result);
+                            return result;
+                        }
+                });
+            }
+            
+            function deactiveMenus(){
+                $("li").removeClass('active');
+                $("#mli").removeClass('active');
+            }
+                
+            function activate(elemId){
+                deactiveMenus();
+                $("#"+elemId).addClass('active');
+            }
+        </script>
+    </head>
+    <body>
+    
+    <!-- Шапка-->
+    <div id='headPlace' class="container">
+    
+    </div>
+    
+    <!-- Меню-->
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a id="mli" class="navbar-brand" href="#" onClick="activate('mli');loadPage('main');">Главная</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                            <li id="cli"><a href="#" onClick="activate('cli');loadPage('catalog');">Каталог</a></li>
+                            <li id="zli"><a href="#" onClick="activate('zli');loadPage('order');">Заказать</a></li>
+                            <li id="vli"><a href="http://vk.com/saeva_duo" target="_blank" >Вконтач</a></li>
+                            <li id="ali"><a href="#" onClick="activate('ali');loadPage('about');">О проекте</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    
+    
+    <!-- Основновная зона-->    
+    <div id='containPlace' class="container">
+    
+    </div>
+    
+    
+    
+    <script>
+        loadPage('main');
+    </script>
+    
+    
+    <!-- FOOTER -->
+    <footer class="container">
+        <hr align="center" size="1"	/>
+        <p class="pull-left">2015</p>
+        <p class="pull-right"><a href="#">Вверх</a></p>
+        <p class="pull-center"><a href="mailto:vovan_trc@mail.com">(Таки да.)</a></p>
+    </footer>
+  </body>
+</html>

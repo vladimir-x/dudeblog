@@ -1,0 +1,59 @@
+<div >
+
+    <script>
+        function enablePrev(flag) {
+            $('#prevPager').css('visibility', flag ? 'visible' : 'hidden');
+        }
+        function enableNext(flag) {
+            $('#nextPager').css('visibility', flag ? 'visible' : 'hidden');
+        }
+
+        function openPopUp(url) {
+            $.ajax({
+                url: url + '&popup=1',
+                dataType: 'html',
+                success: function (result) {
+                    $("#dataplace").html(result);
+                    $("#popup").modal('show');
+                },
+            });
+        }
+
+
+        function del(id) {
+            bootbox.confirm("Удалить запись id=" + id + " ?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '?del=1&id=' + id,
+                        success: function (result) {
+                            location.reload();
+                        },
+                    })
+
+                }
+            });
+        }
+    </script>
+
+    <div id='blogPlace'>
+        :blogPlace
+    </div>
+
+    <ul id='pager' class="pager" style='visibility:visible'>
+        <li id='prevPager' class="previous"><a href=":prevLink">Новее</a></li>
+        <li id='nextPager' class="next"><a href=":nextLink">Старее</a></li>
+
+    </ul>
+    <!--text id='currOffcet' style='visibility:hidden' hidden>0</text>
+    <text id='currFilt' style='visibility:hidden' hidden></text-->
+
+    <div id='popup'  class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='dataplace'>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

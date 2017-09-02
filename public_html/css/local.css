@@ -1,0 +1,31 @@
+﻿.container{
+    max-width: 950px;
+}
+p {
+    text-indent: 20px; /* Отступ первой строки в пикселах */
+}
+
+.form-horizontal
+.control-label{
+	text-align :left;
+}
+
+.border-div{
+    margin-right: 0px;
+    margin-left: 0px;
+    background-color: #FFF;
+    border-color: #DDD;
+    border-width: 1px;
+    border-radius: 4px 4px 0px 0px;
+    box-shadow: none;
+}
+
+body {
+    background: url(../img/snow.png);
+    background-size: 100% 100%;
+    background-repeat: repeat;
+}
+
+.mess-body{
+    background-color: white;
+}

@@ -1,0 +1,231 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Блог одного программиста</title>
+		<meta name="description" content="Блог о больших человеко-подобных роботах, изыскам холостяцкой кулинарии и разработке программ.">
+		<meta name="robots" content="all">
+		
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/local.css" rel="stylesheet" media="screen">
+      
+	    <script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+		
+				//статистика
+				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				}
+				)(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+				function statIt(){
+					ga('create', 'UA-71314636-1', 'auto');
+					ga('send', 'pageview');
+				}
+				
+				var limit = 10;
+		
+				function showEnterForm(){
+					$("#enterLI").css('visibility','hidden');
+					$("#exitLI").css('visibility','hidden');
+					$("#enterForm").css('visibility','visible');
+				}
+				
+				function getCookie(cname) {
+					var name = cname + "=";
+					var ca = document.cookie.split(';');
+					for(var i=0; i<ca.length; i++) {
+						var c = ca[i];
+						while (c.charAt(0)==' ') c = c.substring(1);
+						if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+					}
+					return "";
+				} 
+				
+				function getAuthUser(){
+					return	$.ajax({
+						  url:'bd.php?act=check',
+						  async: false,
+						  dataType: 'text',
+						  success: function (result) {
+							  return result;
+						  },
+					  }).responseText;
+				}
+				
+				function buildMenus(){
+				// скрытие/отображение элементов авторизации
+					var aUser = getAuthUser().trim();
+					
+					if (aUser!=""){
+						$("#enterLI").css('visibility','hidden');
+						$("#exitLI").css('visibility','visible');
+						$("#addBlogLI").css('visibility','visible');
+						$("#aUserLI").css('visibility','visible');
+						$("#aUserLabel").text(aUser);
+					} else {
+						$("#enterLI").css('visibility','visible');
+						$("#exitLI").css('visibility','hidden');
+						$("#addBlogLI").css('visibility','hidden');
+						$("#aUserLI").css('visibility','hidden');
+						$("#aUserLabel").text('');
+					}
+				}
+				
+				function getDataZone(page){
+					$.ajax({
+						  url:'generator.php?page='+page,
+						  async: true,
+						  dataType: 'html',
+						  success: function (result) {
+							$("#dataZone").html(result)
+							$("#pager").css('visibility','hidden');
+							statIt();
+						  return result;
+						}
+					});
+				}
+				
+				function getBlog(filt,offcet){
+					$.ajax({
+						  url:'bd.php?act=getblog&filt='+filt+'&limit='+limit+'&offcet='+offcet,
+						  async: true,
+						  dataType: 'html',
+						  success: function (result) {
+							$("#dataZone").html(result);
+							$("#currFilt").text(filt);
+							$("#currOffcet").text(offcet);
+							showPager();
+							statIt();
+							
+						  return result;
+						}
+					});
+				}
+				
+				function getBlogAuto(){
+					var filt = $("#currFilt").text();
+					var offcet = $("#currOffcet").text();
+					getBlog(filt,offcet);
+				}
+				
+				function userExit(){
+					$.ajax({
+						  url:'bd.php?act=exit',
+						  async: false,
+						  dataType: 'text',
+						  success: function (result) {
+						  return result;
+						}
+					});
+				}
+				
+				function deactiveMenus(){
+					$("li").removeClass('active');
+					$("#mli").removeClass('active');
+				}
+				
+				function activate(elemId){
+					deactiveMenus();
+					$("#"+elemId).addClass('active');
+				}
+				
+				function showPager(){
+					$("#pager").css('visibility','visible');
+				}
+				
+				function prevOffcet(){
+					var co = $("#currOffcet").text();
+					if (co>0){
+						co = Math.max(co-limit,0);
+						$("#currOffcet").text(co)
+					}
+				}
+				
+				function nextOffcet(){
+					var co = parseInt($("#currOffcet").text());
+					$("#currOffcet").text(co+limit);
+				}
+		</script>
+    </head>
+    <body>
+		<!-- NAVIGATOR-->		
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a id="mli" class="navbar-brand" href="#" onClick="getBlog('',0);activate('mli');">Главная</a>
+			</div>
+			<div>
+			  <ul class="nav navbar-nav">
+				  <li id="pli"><a href="#" onClick="getBlog('progr',0);activate('pli');">Программирование</a></li>
+				  <li id="tli"><a href="#" onClick="getBlog('tourism',0);activate('tli');">Туризм</a></li>
+				  <li id="sli"><a href="#" onClick="getBlog('sport',0);activate('sli');">Спорт</a></li>
+				  <li id="fli"><a href="#" onClick="getBlog('food',0);activate('fli');">Еда</a></li>
+				  <li id="bli"><a href="#" onClick="getBlog('books',0);activate('bli');">Книги</a></li>
+				  <li id="sli"><a href="#" onClick="getDataZone('samples');activate('sli');">Примеры работ</a></li>
+				  <li id="ali"><a href="#" onClick="getDataZone('about');activate('ali');">Обо мне</a></li>
+			  </ul>
+			</div>
+			
+			<div class="navbar-header pull-right">
+				<ul class="nav navbar-nav">
+					<li id= 'enterLI'   class = 'pull-right' ><a href="#" onClick='showEnterForm()' >Вход</a></li>
+					<li id= 'exitLI'    class = 'pull-right' style='visibility:hidden'><a href='' onClick='userExit(); buildMenus();'>Выход</a></li>
+					<li id= 'addBlogLI' class = 'pull-right' style='visibility:hidden'><a href="#" onClick="getDataZone('addblog')">+Сообщение</a></li>
+					<li id= 'aUserLI'   class = 'pull-right' style='visibility:hidden'><a href='#' id= 'aUserLabel' ></a> </li>
+				</ul>
+			<div>
+		  </div>
+		
+		</nav>
+			<div id='enterForm'   style='visibility:hidden'>
+				<form class="form-inline" action='bd.php'   method='post' role="form" style='padding-top: 10px;'>
+					  
+					  <div class="form-group">
+						<label for="uname">Логин:</label>
+						<input type="text" class="form-control" id="uname" name="uname" width='100px'>
+					  </div>
+					  <div class="form-group">
+						<label for="passwd">Пароль:</label>
+						<input type="password" class="form-control" id="passwd" name="passwd" width='100px'>
+					  </div>
+					  
+					  <input type="text" id="act" name="act" value="enter" hidden>
+					  <button type="submit" class="btn btn-default">Вход</button>
+				</form>
+			</div>
+			
+		<script type="text/javascript">
+			buildMenus();
+			getBlog('',0);
+			activate('mli');
+		</script>
+	
+	
+		<!-- DATA_ZONE-->
+		<div class="container">
+			<div id='dataZone' >
+			
+			</div>
+			<ul id='pager' class="pager" style='visibility:visible'>
+				<li class="previous"><a href="#" onClick='prevOffcet(); getBlogAuto();'>Новее</a></li>
+				<li class="next"><a href="#" onClick='nextOffcet(); getBlogAuto();'>Старее</a></li>
+				
+			</ul>
+			<text id='currOffcet' style='visibility:hidden' hidden>0</text>
+			<text id='currFilt' style='visibility:hidden' hidden></text>
+		</div>
+		
+		<!-- FOOTER -->
+        <footer class="container">
+			<hr align="center" size="1"	/>
+			
+            <p class="pull-left">2015</p>
+			<p class="pull-right"><a href="#">Вверх</a></p>
+			<p class="pull-center"><a href="mailto:vovan_trc@mail.com">(Написать Чуваку)</a></p>
+        </footer>
+		
+		
+    </body>
+</html>
