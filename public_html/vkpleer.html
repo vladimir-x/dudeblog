@@ -1,0 +1,156 @@
+<div>
+
+
+
+
+	<script type="application/javascript">
+
+        function reloadButton(){
+            console.log('logging');
+
+            var audio_ids = '75615781_456239229,75615781_456239229';
+            reloadAudio(audio_ids,function (x) {
+
+            });
+        }
+
+	</script>
+
+        
+	<div class='panel-heading'><b>Vk pleer</b></div>
+	<div class='panel-body'>
+		<p>Попытка собственной реализации плерера для музыки из VK</p>
+		<button onclick="reloadButton()">reload</button>
+	</div>
+
+    <script type="application/javascript">
+        /**
+         * достаёт адрес до МП3 файла
+         * @param t
+         * @param owner_id
+         * @returns {*}
+         */
+        function audioUnmaskSource(t,owner_id) {
+            inner_owner = owner_id;
+            var e = t.split("?extra=")[1].split("#"), o = "" === e[1] ? "" : a(e[1]);
+            if (e = a(e[0]), "string" != typeof o || !e) return t;
+            o = o ? o.split(String.fromCharCode(9)) : [];
+            for (var s, r, n = o.length; n--;) {
+                if (r = o[n].split(String.fromCharCode(11)), s = r.splice(0, 1, e)[0], !l[s]) return t;
+                e = l[s].apply(null, r)
+            }
+            if (e && "http" === e.substr(0, 4)) return e
+            return t
+        }
+
+        var inner_owner = 0;
+
+        function a(t) {
+            if (!t || t.length % 4 == 1) return !1;
+            for (var e, i, o = 0, a = 0, s = ""; i = t.charAt(a++);) i = r.indexOf(i), ~i && (e = o % 4 ? 64 * e + i : i, o++ % 4) && (s += String.fromCharCode(255 & e >> (-2 * o & 6)));
+            return s
+        }
+
+        function s(t, e) {
+            var i = t.length, o = [];
+            if (i) {
+                var a = i;
+                for (e = Math.abs(e); a--;) e = (i * (a + 1) ^ e + a) % i, o[a] = e
+            }
+            return o
+        }
+
+        var r = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN0PQRSTUVWXYZO123456789+/=", l = {
+            v: function (t) {
+                return t.split("").reverse().join("")
+            }, r: function (t, e) {
+                t = t.split("");
+                for (var i, o = r + r, a = t.length; a--;) i = o.indexOf(t[a]), ~i && (t[a] = o.substr(i - e, 1));
+                return t.join("")
+            }, s: function (t, e) {
+                var i = t.length;
+                if (i) {
+                    var o = s(t, e), a = 0;
+                    for (t = t.split(""); ++a < i;) t[a] = t.splice(o[i - 1 - a], 1, t[a])[0];
+                    t = t.join("")
+                }
+                return t
+            }, i: function (t, e) {
+                return l.s(t, e ^ inner_owner)
+            }, x: function (t, e) {
+                var i = [];
+                return e = e.charCodeAt(0), each(t.split(""), function (t, o) {
+                    i.push(String.fromCharCode(o.charCodeAt(0) ^ e))
+                }), i.join("")
+            }
+        }
+
+    </script>
+
+    <script type="application/javascript">
+
+        /**
+         * Перезагрузить хэши к указанными трекам
+         * @param ids через запятую ownerID_trackID
+         * @param callback
+         */
+        function reloadAudio(ids,callback){
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://vk.com/al_audio.php', true);
+           // xhr.withCredentials = true;
+
+            xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://eldude.ru');
+            xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://eldude.ru');
+
+            //xhr.responseType = 'jsonp';
+
+            xhr.onload = function(e) {
+
+                console.log('onload');
+                console.log(responseData)
+                if (this.status == 200) {
+                    // get binary data as a response
+                    var blob = this.response;
+                }
+            };
+
+            xhr.onerror = function() {
+                console.log('onerror');
+                console.log(this.response)
+            }
+
+            xhr.send('act=reload_audio&al=1&ids='+ids);
+
+            /*
+            $.ajax({
+                type: 'POST',
+                url: 'https://vk.com/al_audio.php',
+                crossDomain: true,
+                data: 'act=reload_audio&al=1&ids='+ids,
+                dataType: 'jsonp',
+                success: function(responseData, textStatus, jqXHR) {
+					//alert(responseData);
+                    console.log('ok');
+                    console.log(responseData)
+                    console.log(JSON.stringify(responseData));
+                },
+                error: function (responseData, textStatus, errorThrown) {
+					//alert(responseData);
+                    console.log('err');
+                    console.log(responseData)
+                    console.log(JSON.stringify(responseData));
+
+                }
+            });
+            */
+        }
+
+    </script>
+
+
+
+
+
+
+</div>

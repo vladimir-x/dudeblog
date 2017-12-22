@@ -1,5 +1,4 @@
 <?php
-
 $page = $_GET['page'];
 
 function includeAndReplace($filename, $search, $replace) {
@@ -137,6 +136,14 @@ if ($_GET['addblog']) {
             $title = 'Примеры работ';
             $meta = 'Примеры работ';
             $content = file_get_contents('samples.html');
+            $script = "activate('" . $page . "-li" . "')";
+            break;
+		case 'vkpleer':
+			//header('Access-Control-Allow-Origin: *');
+			
+            $title = 'VK pleer';
+            $meta = 'VK pleer';
+            $content = file_get_contents('vkpleer.html');
             $script = "activate('" . $page . "-li" . "')";
             break;
         case 'about':
