@@ -4,24 +4,25 @@
         <meta name="robots" content="all">
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>:title</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content=":meta">
-
-        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="css/wysiwyg.css" rel="stylesheet" media="screen">
-        <!--link href="css/MaterialIcons.css" rel="stylesheet" media="screen"-->
-        <link href="css/font-awesome.css" rel="stylesheet" media="screen">
-        <link href="css/local.css" rel="stylesheet" media="screen">
-
 
         <script src="js/jquery.js"></script>
         <script src="js/jquery.hotkeys.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootbox.min.js"></script>
-
         <script src="js/bootstrap-wysiwyg.js"></script>
+		<script src="js/easyXDM.debug.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.0.0/less.min.js" type="text/javascript"></script>
 
+	    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/wysiwyg.css" rel="stylesheet" media="screen">
+        <!--link href="css/MaterialIcons.css" rel="stylesheet" media="screen"-->
+        <link href="css/font-awesome.css" rel="stylesheet" media="screen">
+        <link href="css/local.css" rel="stylesheet" media="screen">
 
+		<title>:title</title>
+		
 
         <script type="text/javascript">
 
@@ -204,42 +205,45 @@
 
         </script>
     </head>
-    <body>
+
+    <body style="max-width: 1280px;">
 	
-		<div class="" style="text-align: center;">
-			<img src='img/head.jpg' alt='Blog head img' max-height='200'> 
+		<div class="container-fluid" style=" vertical-align: middle; padding:0px">
+			<img src='img/head.jpg' alt='Blog head img'> 
 		</div>
 
-        <!-- NAVIGATOR-->		
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a id="mli" class="navbar-brand" href="?page=blog"><i class="fa fa-home"></i>Главная</a>
-                </div>
+        <!-- NAVIGATOR-->	
+		<nav class="navbar navbar-default">
+            <div class="container-fluid"  style=" padding:0px">
+		
+				<div>
+					<ul class="nav navbar-nav">
+						<li id="mli"><a href="?page=blog"><i class="fa fa-home"></i><span class=""><b>Главная</b><span></a></li>
+						<li id="progr-li"><a href="?page=progr" ><i class="fa fa-keyboard-o"></i><span class="">Программирование</span></a></li>
+						<li id="samples-li"><a href="?page=samples" ><i class="fa fa-medkit"></i><span class="">Примеры работ</span></a></li>
+						<li  class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-glass"></span><span class="">Досуг</span><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li id="tourism-li"><a href="?page=tourism"><span class="glyphicon glyphicon-tent" aria-hidden="true"></span><span class="">Туризм</span></a></li>
+								<li id="sport-li"><a href="?page=sport" ><i class="fa fa-futbol-o"></i><span class="">Спорт</span></a></li>
+								<li id="food-li"><a href="?page=food" ><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span><span class="">Еда</span></a></li>
+								<li id="books-li"><a href="?page=books"><span class="glyphicon glyphicon-book" aria-hidden="true"></span><span class="">Книги</span></a></li>
+							</ul>
+						</li>
+						<li id="vkpleer-li"><a href="?page=vkpleer" ><i class="glyphicon glyphicon-music"></i><span class="">vk плеер</span></a></li>
+						<li id="about-li"><a href="?page=about"><span class="glyphicon glyphicon-user" aria-hidden="true"></span><span class="">Обо мне</span></a></li>
+						<li id="search-li" style='padding-top:12px;padding-left:20px; '><input id="findField" type="text" placeholder="Поиск"></li>
+
+					</ul>
                 <div>
-                    <ul class="nav navbar-nav">
-                        <li id="progr-li"><a href="?page=progr" ><i class="fa fa-keyboard-o"></i>Программирование</a></li>
-                        <li id="samples-li"><a href="?page=samples" ><i class="fa fa-medkit"></i>Примеры работ</a></li>
-                        <li  class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-glass"></span>Досуг<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li id="tourism-li"><a href="?page=tourism"><span class="glyphicon glyphicon-tent" aria-hidden="true"></span>Туризм</a></li>
-                                <li id="sport-li"><a href="?page=sport" ><i class="fa fa-futbol-o"></i>Спорт</a></li>
-                                <li id="food-li"><a href="?page=food" ><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>Еда</a></li>
-                                <li id="books-li"><a href="?page=books"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>Книги</a></li>
-                            </ul>
-                        </li>
-						<li id="samples-li"><a href="?page=vkpleer" ><i class="glyphicon glyphicon-music"></i>vk плеер</a></li>
-                        <li id="about-li"><a href="?page=about"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Обо мне</a></li>
-                        <li id="search-li" style='padding-top:10px '><input id="findField" type="text" placeholder="Поиск"></li>
-
-                    </ul>
-                </div>
-
-                <div class="navbar-header navbar-right" id='userMenu'>
-                </div>
-            </div>
-        </nav>
+                
+				</div>
+					<div class="nav navbar-right"  id='userMenu'>
+					</div>
+				</div>
+            
+			</div>
+		</nav>
 
         <!--меню авторизации-->
         <div id='menus' style='visibility:hidden'>
@@ -267,12 +271,12 @@
 
             <ul class="nav navbar-nav" id='controlMenu'>
 			
-			<li id= 'addBlogLI'><a href="?addblog=new"><span class="glyphicon glyphicon-plus"></span>Сообщение</a></li>
-                        <li id= 'exitLI'>
-							<a onClick='userExit();location.reload();return false;'>
-							<span class="glyphicon glyphicon-log-out"></span>Выход(<i id="aUserLabel">user</i>)
-							</a>
-						</li>
+				<li id= 'addBlogLI'><a href="?addblog=new"><span class="glyphicon glyphicon-plus"></span>Сообщение</a></li>
+                <li id= 'exitLI'>
+                    <a onClick='userExit();location.reload();return false;'>
+                    <span class="glyphicon glyphicon-log-out"></span>Выход(<i id="aUserLabel">user</i>)
+                    </a>
+				</li>
             </ul>
         </div>
 

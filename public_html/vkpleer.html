@@ -1,8 +1,6 @@
 <div>
 
 
-
-
 	<script type="application/javascript">
 
         function reloadButton(){
@@ -14,12 +12,35 @@
             });
         }
 
+
+        function addScript(src) {
+            var elem = document.createElement("script");
+            elem.src = src;
+            document.head.appendChild(elem);
+        }
+
+
+
 	</script>
+
+	<div class='panel-heading'><b>Radio shtabra.ru</b></div>
+	<div class='panel-body'>
+		
+		<p>Плеер радио "Штабное радио"</p>
+		<audio controls>
+		  <source src="http://a3.radioheart.ru:8047/ShtabRa" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+		<iframe src="http://a3.radioheart.ru/api/html?userlogin=user8047&api=lasttrack&server=a3.radioheart.ru&port=8047&fontsize=12" frameborder="1"></iframe>
+		
+	</div>
 
         
 	<div class='panel-heading'><b>Vk pleer</b></div>
 	<div class='panel-body'>
 		<p>Попытка собственной реализации плерера для музыки из VK</p>
+		
+		
 		<button onclick="reloadButton()">reload</button>
 	</div>
 
@@ -89,6 +110,15 @@
 
     <script type="application/javascript">
 
+
+
+        function photos(raw){
+            console.log('photos');
+            console.log(raw);
+		}
+
+
+
         /**
          * Перезагрузить хэши к указанными трекам
          * @param ids через запятую ownerID_trackID
@@ -96,6 +126,31 @@
          */
         function reloadAudio(ids,callback){
 
+            var xhr = new easyXDM.Rpc({
+                remote: "'https://vk.com/al_audio.php?&act=reload_audio&al=1&ids='+ids" // путь к провайдеру
+            }, {
+                remote: {
+                    request: {}
+                }
+            });
+
+            xhr.request(
+                {
+                    url: "pathRelativeToRemote/getrest/",  //адрес нашего запроса
+                    method: "POST",
+                    data: {foo:"bar"}
+                }, function(response) { // функция обработки результата ответа
+                    alert(response.status);
+                    alert(response.data);
+                }
+            );
+
+
+            //addScript('https://vk.com/al_audio.php?callback=photos&act=reload_audio&al=1&ids='+ids);
+
+
+
+            /*
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://vk.com/al_audio.php', true);
            // xhr.withCredentials = true;
@@ -118,6 +173,8 @@
             }
 
             xhr.send('act=reload_audio&al=1&ids='+ids);
+            */
+
 
             /*
             $.ajax({
@@ -126,6 +183,14 @@
                 crossDomain: true,
                 data: 'act=reload_audio&al=1&ids='+ids,
                 dataType: 'jsonp',
+                processData: true,
+                jsonpCallback: 'photos',
+
+
+                success: function(dataWeGotViaJsonp){
+                    console.log('ok2');
+                    console.log(dataWeGotViaJsonp.length);
+                },
                 success: function(responseData, textStatus, jqXHR) {
 					//alert(responseData);
                     console.log('ok');
@@ -137,10 +202,19 @@
                     console.log('err');
                     console.log(responseData)
                     console.log(JSON.stringify(responseData));
+                    console.log(JSON.stringify(textStatus));
+                    console.log(JSON.stringify(errorThrown));
+                    console.log(responseData.pipe())
 
+                },
+                // code to run regardless of success or failure
+                complete: function( xhr, status ) {
+                    console.log('complete');
+                    console.log(xhr, status)
                 }
             });
             */
+
         }
 
     </script>
